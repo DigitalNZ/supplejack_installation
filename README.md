@@ -8,7 +8,7 @@ The following template can be used to install a copy of the Supplejack stack
 To install the Supplejack stack run the following command:
 
 ```bash
-rails _3.2.12_ new mysupplejack_api_name --skip-bundle -m https://raw.github.com/digitalnz/supplejack_template/master/supplejack_template.rb
+rails _3.2.12_ new mysupplejack_api_name --skip-bundle -m https://raw.github.com/digitalnz/supplejack_template/master/supplejack_api_template.rb
 ```
 
 For a full list of dependancies and documentation please refer to http://digitalnz.github.io/supplejack/
