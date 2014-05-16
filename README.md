@@ -3,7 +3,7 @@ Supplejack Rails Application Template
 
 Supplejack is a platform for managing the harvesting and manipulation of metadata. It was originally developed to manage the sourcing of metadata for the [DigitalNZ](http://digitalnz.org) aggregation service, and has grown to a platform that can manage millions of records from hundreds of data sources.
 
-It's main purpose is to manage the process of fetching data from remote sources, mappaing data to a standard data schema, managing any quality control or enrichment processes, and surfacing the standardised data via a public API. The full Supplejack code repo is on GitHub.
+It's main purpose is to manage the process of fetching data from remote sources, mappaing data to a standard data schema, managing any quality control or enrichment processes, and surfacing the standardised data via a public API.
 
 This is a [Rails Application Template](http://guides.rubyonrails.org/rails_application_templates.html) for installing the Supplejack Stack.
 
