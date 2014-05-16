@@ -1,7 +1,9 @@
 Supplejack Rails Application Template
 ===================
 
-The following template can be used to install a copy of the Supplejack stack
+This is a [Rails Application Template](http://guides.rubyonrails.org/rails_application_templates.html) for installing the Supplejack Stack.
+
+For a full list of dependancies and documentation please refer to http://digitalnz.github.io/supplejack/
 
 ## Usage
 
@@ -10,8 +12,6 @@ To install the Supplejack stack run the following command:
 ```bash
 rails _3.2.12_ new mysupplejack_api_name --skip-bundle -m https://raw.github.com/digitalnz/supplejack_template/master/supplejack_api_template.rb
 ```
-
-For a full list of dependancies and documentation please refer to http://digitalnz.github.io/supplejack/
 
 ## COPYRIGHT AND LICENSING  
 
