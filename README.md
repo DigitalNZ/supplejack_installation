@@ -1,17 +1,13 @@
 Supplejack Rails Application Template
 ===================
 
-Supplejack is a platform for managing the harvesting and manipulation of metadata. It was originally developed to manage the sourcing of metadata for the [DigitalNZ](http://digitalnz.org) aggregation service, and has grown to a platform that can manage millions of records from hundreds of data sources.
-
-It's main purpose is to manage the process of fetching data from remote sources, mappaing data to a standard data schema, managing any quality control or enrichment processes, and surfacing the standardised data via a public API.
-
 This is a [Rails Application Template](http://guides.rubyonrails.org/rails_application_templates.html) for installing the Supplejack Stack.
 
-For a full list of dependancies and documentation please refer to http://digitalnz.github.io/supplejack/
+For more information on how to configure and use this application refer to the [documentation](http://digitalnz.github.io/supplejack).
 
 ## Usage
 
-To install the Supplejack stack run the following command:
+To install the Supplejack Stack run:
 
 ```bash
 rails _3.2.12_ new mysupplejack_api_name --skip-bundle -m https://raw.github.com/digitalnz/supplejack_template/master/supplejack_api_template.rb
