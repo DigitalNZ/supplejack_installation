@@ -1,9 +1,10 @@
-# The Supplejack code is Crown copyright (C) 2014, New Zealand Government,
-# and is licensed under the GNU General Public License, version 3. 
-# See https://github.com/DigitalNZ/supplejack for details. 
+# The Supplejack installation scripts are Crown copyright (C) 2014, New Zealand Government,
+# and are licensed under the GNU General Public License, version 3. 
+# See https://github.com/DigitalNZ/supplejack_installationn for details.
 #
-# Supplejack was created by DigitalNZ at the National Library of NZ 
+# Supplejack was created by DigitalNZ at the National Library of NZ
 # and the Department of Internal Affairs. http://digitalnz.org/supplejack
+
 
 require 'yaml'
 require 'devise'
