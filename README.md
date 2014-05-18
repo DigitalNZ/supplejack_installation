@@ -10,7 +10,7 @@ For more information on how to configure and use this application refer to the [
 To install the Supplejack Stack run:
 
 ```bash
-rails _3.2.12_ new mysupplejack_api_name --skip-bundle -m https://raw.github.com/digitalnz/supplejack_template/master/supplejack_api_template.rb
+rails _3.2.12_ new mysupplejack_api_name --skip-bundle -m https://raw.github.com/digitalnz/supplejack_installation/master/supplejack_api_template.rb
 ```
 
 ## COPYRIGHT AND LICENSING  
