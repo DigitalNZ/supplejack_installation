@@ -82,6 +82,7 @@ inside('tmp') do
   inside('../../supplejack_manager') do
     code = "User.new(email: 'test@example.com', name: 'Test User', password: 'password').update_attribute(:authentication_token, '#{manager_key}')"
     file 'db/seeds.rb', code, force: true
+    run 'bundle install --quiet'
     run 'bundle exec rake db:seed'
 
     # ------------------------------------------------------ 
@@ -122,6 +123,7 @@ inside('tmp') do
   inside('../../supplejack_worker') do
     code = "User.create(authentication_token: '#{worker_key}')"
     file 'db/seeds.rb', code, force: true
+    run 'bundle install --quiet'
     run 'bundle exec rake db:seed'
 
     run 'bundle exec rails server -p3002 &'
