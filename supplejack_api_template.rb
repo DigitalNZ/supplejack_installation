@@ -7,7 +7,6 @@
 
 
 require 'yaml'
-require 'devise'
 
 # ------------------------------------------------------ 
 # Check MongoDB connection
@@ -21,7 +20,7 @@ end
 # ------------------------------------------------------ 
 # Install supplejack_api gem
 # ------------------------------------------------------
-gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git'
+gem 'supplejack_api', git: 'git@github.com:DigitalNZ/supplejack_api.git'
 run 'bundle install --quiet'
 
 # Run the Supplejack API installer 
@@ -50,9 +49,9 @@ rake 'sunspot:solr:start'
 # ------------------------------------------------------ 
 # Generate API keys
 # ------------------------------------------------------
-api_key = Devise.friendly_token
-manager_key = Devise.friendly_token
-worker_key = Devise.friendly_token
+api_key     = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
+manager_key = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
+worker_key  = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
 
 
 # ------------------------------------------------------ 
