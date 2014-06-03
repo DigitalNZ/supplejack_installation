@@ -87,7 +87,7 @@ inside('tmp') do
     # ------------------------------------------------------ 
     # Run manager server
     # ------------------------------------------------------
-    run 'bundle exec rails server -p3001 &'
+    run 'bundle exec rails server -p3001 > /dev/null 2>&1 &'
   end
 end
 
@@ -125,9 +125,9 @@ inside('tmp') do
     run 'bundle install --quiet'
     run 'bundle exec rake db:seed'
 
-    run 'bundle exec rails server -p3002 &'
+    run 'bundle exec rails server -p3002 > /dev/null 2>&1 &'
 
-    run 'bundle exec sidekiq &'
+    run 'bundle exec sidekiq > /dev/null 2>&1 &'
   end
 end
 
@@ -135,7 +135,7 @@ end
 # ------------------------------------------------------ 
 # Run API server
 # ------------------------------------------------------
-run 'bundle exec rails server -p3000 &'
+run 'bundle exec rails server -p3000 > /dev/null 2>&1 &'
 
 
 # ------------------------------------------------------ 
@@ -180,7 +180,7 @@ code = <<-CODE
   puts "\n"
   puts 'Developer Notes'
   puts "---------------"
-  puts "To kill all rails servers, run the following: `ps -ef | grep '[p]300' | awk '{ print $2; }' | while read line; do kill $line; done`"
+  puts "To kill all rails servers, run the following: `ps -ef | grep '[p]300\|[s]idekiq' | awk '{ print $2; }' | while read line; do kill $line; done`"
   puts "\n"
   puts '------------------------------------------------------------------'
   puts "\n"
@@ -189,4 +189,4 @@ CODE
 
 file 'db/seeds.rb', code, force: true
 rake 'db:seed'
-gsub_file('db/seeds.rb', /^\"|puts\s(.*)\s/, '')
+gsub_file('db/seeds.rb', /^\"|puts\s(.*)\s/, '', verbose: false)
