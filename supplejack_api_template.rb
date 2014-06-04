@@ -164,10 +164,10 @@ code = <<-CODE
   puts 'To perform a search, go to:'
   puts 'http://localhost:3000/records.json?api_key=' + user.api_key
   puts "\n"
-  puts 'To visit the SuppleJack Manger go to:'
+  puts 'To visit the Supplejack Manager go to:'
   puts 'http://localhost:3001/. The default username/password is test@example.com/password'
   puts "\n"
-  puts 'The SuppleJack Worker go to:'
+  puts 'The Supplejack Worker go to:'
   puts 'http://localhost:3002/harvest_jobs?auth_token=#{worker_key}. Note, there is no data in the Worker yet.'
   puts "\n"
   puts "What's Next?"
