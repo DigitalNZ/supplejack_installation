@@ -160,7 +160,6 @@ code = <<-CODE
   puts "\n"
   puts '------------------------------------------------------------------'
   puts 'Congratulations! You now have a working Supplejack-powered API'
-  puts 'Your API key is ' + user.api_key
   puts "\n"
   puts 'To retrieve the sample record, go to:'
   puts 'http://localhost:3000/records/' + record.record_id.to_s + '.json?api_key=' + user.api_key
