@@ -135,6 +135,66 @@ inside('tmp') do
   end
 end
 
+# ------------------------------------------------------ 
+# Create Welcome page
+# ------------------------------------------------------
+
+route "get 'welcome', to: 'application#welcome'"
+
+code = <<-CODE
+class ApplicationController < ActionController::Base
+  protect_from_forgery
+
+  def welcome
+  end
+end
+CODE
+
+file 'app/controllers/application_controller.rb', code, force: true
+
+file 'app/views/application/welcome.html.erb', <<-CODE
+<div class="row">
+  <div class"eight columns centered">
+    <%
+      api_key = SupplejackApi::User.last.authentication_token
+    %>
+    <h2>Congratulations!</h2>
+    <h2>You now have a working Supplejack-powered API</h2>
+  
+    <h4>Your API key is <%= api_key %></h4>
+  
+    <h3>Accessing Supplejack</h3>
+  
+    <h5>To retrieve the sample record, go to:</h5>
+    <a href="http://localhost:3000/records/<%= SupplejackApi::Record.last.record_id %>.json?api_key=<%= api_key %>">http://localhost:3000/records/<%= SupplejackApi::Record.last.record_id %>.json?api_key=<%= api_key %></a>
+  
+    <h5>To perform a search, go to:</h5>
+    <a href="http://localhost:3000/records.json?api_key=<%= api_key %>">http://localhost:3000/records.json?api_key=<%= api_key %></a>
+  
+    <h5>To visit the Supplejack Manager go to:</h5>
+    <p><a href="http://localhost:3001">http://localhost:3001/</a></p>
+    <p>The default username/password is test@example.com/password</p>
+  
+    <h5>The Supplejack Worker go to:</h5>
+    <p><a href="http://localhost:3002/harvest_jobs?auth_token=#{worker_key}.">http://localhost:3002/harvest_jobs?auth_token=#{worker_key}. </a></p>
+  
+    <p>Note, there is no data in the Worker yet.</p>
+  
+  
+    <h3>What's Next?</h3>
+    <ul>
+      <li>Visit Supplejack documentation: http://digitalnz.github.io/supplejack</li>
+      <li>Edit your schema file: http://digitalnz.github.io/supplejack/api/creating-a-schema.html</li>
+      <li>Start creating records by installing the Supplejack <a href="http://digitalnz.github.io/supplejack/start/supplejack-manager.html">Manager</a> and <a href="http://digitalnz.github.io/supplejack/start/supplejack-worker.html">Worker</a></li>
+    </ul>
+  
+    <h3>Developer Notes</h3>
+  
+    <p>To kill all rails servers, run the following:</p>
+    <p><code>`ps -ef | grep '[p]300\|[s]idekiq' | awk '{ print $2; }' | while read line; do kill $line; done`</code></p>
+  </div>
+</div>
+CODE
 
 # ------------------------------------------------------ 
 # Run API server
