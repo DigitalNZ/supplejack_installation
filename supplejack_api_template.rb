@@ -221,6 +221,10 @@ code = <<-CODE
   puts '------------------------------------------------------------------'
   puts 'Congratulations! You now have a working Supplejack-powered API'
   puts "\n"
+  puts '############################################'
+  puts '##  Your API key is ' + user.api_key  ##'
+  puts '############################################'
+  puts "\n"
   puts 'To retrieve the sample record, go to:'
   puts 'http://localhost:3000/records/' + record.record_id.to_s + '.json?api_key=' + user.api_key
   puts "\n"
@@ -240,6 +244,9 @@ code = <<-CODE
   puts '* Start creating records by installing the Supplejack Manager and Worker'
   puts '  - Supplejack Manager: http://digitalnz.github.io/supplejack/start/supplejack-manager.html'
   puts '  - Supplejack Worker: http://digitalnz.github.io/supplejack/start/supplejack-worker.html'
+  puts "\n"
+  puts 'You can view all this information at any time by visiting:'
+  puts 'http://localhost:3000/welcome'
   puts "\n"
   puts 'Developer Notes'
   puts "---------------"
