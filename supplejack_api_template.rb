@@ -66,6 +66,7 @@ development: &development
   WORKER_HOST: "http://localhost:3002"
   WORKER_API_KEY: "#{worker_key}"
   HARVESTER_CACHING_ENABLED: true
+  PARSER_TYPE_ENABLED: false
   API_HOST: "http://localhost:3000"
   API_MONGOID_HOSTS: "localhost:27017"
 
