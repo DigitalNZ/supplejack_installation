@@ -187,6 +187,7 @@ file 'app/views/application/welcome.html.erb', <<-CODE
       <li>Visit Supplejack documentation: http://digitalnz.github.io/supplejack</li>
       <li>Edit your schema file: http://digitalnz.github.io/supplejack/api/creating-a-schema.html</li>
       <li>Start creating records by installing the Supplejack <a href="http://digitalnz.github.io/supplejack/start/supplejack-manager.html">Manager</a> and <a href="http://digitalnz.github.io/supplejack/start/supplejack-worker.html">Worker</a></li>
+      <li>Clone Supplejack Website demo and start interacting with your API. Visit <a href="http://digitalnz.github.io/supplejack/start/supplejack-website.html">Supplejack Website Demo</a> for more info</li>
     </ul>
   
     <h3>Developer Notes</h3>
@@ -208,12 +209,30 @@ run 'bundle exec rails server -p3000 > /dev/null 2>&1 &'
 # ------------------------------------------------------
 code = <<-CODE
   # Create user
-  user = SupplejackApi::User.create(email: 'test@example.com', name: 'Test User', authentication_token: '#{api_key}', role: 'admin')
+  user = SupplejackApi::User.create(
+    email: 'test@example.com',
+    name: 'Test User',
+    authentication_token: '_pY8kpGk_GU2QgMHfYFj',
+    role: 'admin')
 
   # Create a sample record
   Sunspot.session = Sunspot::Rails.build_session
-  record = SupplejackApi::Record.new(internal_identifier: 'abc123', status: 'active', landing_url: 'http://boost.co.nz/')
-  record.fragments << SupplejackApi::Fragment.new(name: 'John Doe', address: 'Wellington, New Zealand')
+  record = SupplejackApi::Record.new(
+    internal_identifier: 'abc123',
+    status: 'active',
+    landing_url: 'http://boost.co.nz/')
+
+  # Attach fragments
+  record.fragments << SupplejackApi::Fragment.new(
+    title: 'Supplejack API',
+    description: 'The Supplejack API is a mountable engine which provides functionality to store, index and retrieve metadata via an API.',
+    type: ['engine'],
+    source_provider_name: 'DigitalNZ',
+    source_contributor_name: 'National Library of NZ',
+    source_website_name: 'natlib.govt.nz',
+    source_url: 'http://natlib.govt.nz')
+
+  # Save and index
   record.save!
   record.index!
 
@@ -245,7 +264,7 @@ code = <<-CODE
   puts '* Start creating records by installing the Supplejack Manager and Worker'
   puts '  - Supplejack Manager: http://digitalnz.github.io/supplejack/start/supplejack-manager.html'
   puts '  - Supplejack Worker: http://digitalnz.github.io/supplejack/start/supplejack-worker.html'
-  puts '* Clone Supplejack Website demo to start interacting with your API. http://digitalnz.github.io/supplejack/start/supplejack-website.html'
+  puts '* Clone Supplejack Website demo and start interacting with your API. http://digitalnz.github.io/supplejack/start/supplejack-website.html'
   puts "\n"
   puts 'You can view all this information at any time by visiting:'
   puts 'http://localhost:3000/welcome'
