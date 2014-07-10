@@ -245,6 +245,7 @@ code = <<-CODE
   puts '* Start creating records by installing the Supplejack Manager and Worker'
   puts '  - Supplejack Manager: http://digitalnz.github.io/supplejack/start/supplejack-manager.html'
   puts '  - Supplejack Worker: http://digitalnz.github.io/supplejack/start/supplejack-worker.html'
+  puts '* Clone Supplejack Website demo to start interacting with your API. http://digitalnz.github.io/supplejack/start/supplejack-website.html'
   puts "\n"
   puts 'You can view all this information at any time by visiting:'
   puts 'http://localhost:3000/welcome'
