@@ -61,12 +61,17 @@ worker_key  = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
 # ------------------------------------------------------ 
 # Install Supplejack Manager
 # ------------------------------------------------------
+if yes?("Do you want to enable concept harvest?")
+  concept_enabled = true
+else
+  concept_enabled = false
+end
 manager_settings = <<-SETTINGS
 development: &development
   WORKER_HOST: "http://localhost:3002"
   WORKER_API_KEY: "#{worker_key}"
   HARVESTER_CACHING_ENABLED: true
-  PARSER_TYPE_ENABLED: false
+  PARSER_TYPE_ENABLED: #{concept_enabled}
   API_HOST: "http://localhost:3000"
   API_MONGOID_HOSTS: "localhost:27017"
 
