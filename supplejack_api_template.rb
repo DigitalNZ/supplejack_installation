@@ -20,7 +20,7 @@ end
 # ------------------------------------------------------ 
 # Install supplejack_api gem
 # ------------------------------------------------------
-gem 'supplejack_api', git: 'git@github.com:DigitalNZ/supplejack_api.git'
+gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git'
 
 run 'bundle config build.nokogiri —use-system-libraries' # Prevent warning when building Nokogiri
 
@@ -80,7 +80,7 @@ staging:
 SETTINGS
 
 inside('tmp') do
-  run 'git clone git@github.com:DigitalNZ/supplejack_manager.git --quiet'
+  run 'git clone https://github.com/DigitalNZ/supplejack_manager.git --quiet'
 
   inside('supplejack_manager') do
     file 'config/application.yml', manager_settings, force: true
@@ -118,7 +118,7 @@ development:
 SETTINGS
 
 inside('tmp') do
-  run 'git clone git@github.com:DigitalNZ/supplejack_worker.git --quiet'
+  run 'git clone https://github.com/DigitalNZ/supplejack_worker.git --quiet'
 
   inside('supplejack_worker') do
     file 'config/application.yml', worker_settings, force: true
