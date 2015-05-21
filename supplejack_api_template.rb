@@ -49,6 +49,35 @@ end
 
 rake 'sunspot:solr:start'
 
+# ------------------------------------------------------
+# Start Resque-pool
+# ------------------------------------------------------
+
+resque_pool_pid = `ps aux | grep resque-pool-master | grep -v grep | awk '{ print $2 }'`
+
+if resque_pool_pid.present?
+  puts '------------------------------------------------------------------'
+  puts "Found resque-pool instance running: #{resque_pool_pid}"
+  puts "Killing #{resque_pool_pid}"
+  Process.kill 2, resque_pool_pid.to_i
+end
+
+run "bundle exec resque-pool --daemon --environment development"
+
+# ------------------------------------------------------ 
+# Start Resque-scheduler
+# ------------------------------------------------------
+
+resque_scheduler_pid = `ps aux | grep resque-scheduler | grep -v grep | awk '{ print $2 }'`
+if resque_scheduler_pid.present?
+  puts '------------------------------------------------------------------'
+  puts "Found resque-pool instance running: #{resque_scheduler_pid}"
+  puts "Killing #{resque_scheduler_pid}"
+  Process.kill 2, resque_scheduler_pid.to_i
+end
+
+rake 'resque:scheduler BACKGROUND=true'
+
 
 # ------------------------------------------------------ 
 # Generate API keys
