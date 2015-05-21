@@ -118,7 +118,7 @@ inside('tmp') do
   run 'mv supplejack_manager ../../'
 
   inside('../../supplejack_manager') do
-    code = "User.new(email: 'test@example.com', name: 'Test User', password: 'password').update_attribute(:authentication_token, '#{manager_key}')"
+    code = "User.new(email: 'test@example.com', name: 'Test User', password: 'password', role: 'admin').update_attribute(:authentication_token, '#{manager_key}')"
     file 'db/seeds.rb', code, force: true
     run 'bundle install --quiet'
     run 'bundle exec rake db:seed'
