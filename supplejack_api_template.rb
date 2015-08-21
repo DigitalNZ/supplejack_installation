@@ -260,10 +260,9 @@ code = <<-CODE
   record.fragments << SupplejackApi::Fragment.new(
     title: 'Supplejack API',
     description: 'The Supplejack API is a mountable engine which provides functionality to store, index and retrieve metadata via an API.',
-    type: ['engine'],
-    source_provider_name: 'DigitalNZ',
-    source_contributor_name: 'National Library of NZ',
-    source_website_name: 'natlib.govt.nz',
+    category: ['engine'],
+    display_content_partner: 'DigitalNZ',
+    display_collection: 'natlib.govt.nz',
     source_url: 'http://natlib.govt.nz')
 
   # Save and index
