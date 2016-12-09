@@ -20,7 +20,7 @@ end
 # ------------------------------------------------------ 
 # Install supplejack_api gem
 # ------------------------------------------------------
-gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git'
+gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git', branch: 'tl/fix-install-generator'
 
 run 'bundle config build.nokogiri —use-system-libraries' # Prevent warning when building Nokogiri
 
@@ -50,34 +50,19 @@ end
 rake 'sunspot:solr:start'
 
 # ------------------------------------------------------
-# Start Resque-pool
+# Start Sidekiq
 # ------------------------------------------------------
 
-resque_pool_pid = `ps aux | grep resque-pool-master | grep -v grep | awk '{ print $2 }'`
+sidekiq_pid = `ps aux | grep sidekiq | grep -v grep | awk '{ print $2 }'`
 
-if resque_pool_pid.present?
+if sidekiq_pid.present?
   puts '------------------------------------------------------------------'
-  puts "Found resque-pool instance running: #{resque_pool_pid}"
-  puts "Killing #{resque_pool_pid}"
-  Process.kill 2, resque_pool_pid.to_i
+  puts "Found Sidekiq instance running: #{sidekiq_pid}"
+  puts "Killing #{sidekiq_pid}"
+  Process.kill 2, sidekiq_pid.to_i
 end
 
-run "bundle exec resque-pool --daemon --environment development"
-
-# ------------------------------------------------------ 
-# Start Resque-scheduler
-# ------------------------------------------------------
-
-resque_scheduler_pid = `ps aux | grep resque-scheduler | grep -v grep | awk '{ print $2 }'`
-if resque_scheduler_pid.present?
-  puts '------------------------------------------------------------------'
-  puts "Found resque-pool instance running: #{resque_scheduler_pid}"
-  puts "Killing #{resque_scheduler_pid}"
-  Process.kill 2, resque_scheduler_pid.to_i
-end
-
-rake 'resque:scheduler BACKGROUND=true'
-
+run "bundle exec sidekiq > /dev/null 2>&1 &"
 
 # ------------------------------------------------------ 
 # Generate API keys
@@ -312,5 +297,5 @@ code = <<-CODE
 CODE
 
 file 'db/seeds.rb', code, force: true
-rake 'db:seed'
+rake 'db:seed --trace'
 gsub_file('db/seeds.rb', /^\"|puts\s(.*)\s/, '', verbose: false)
