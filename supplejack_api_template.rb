@@ -20,7 +20,7 @@ end
 # ------------------------------------------------------ 
 # Install supplejack_api gem
 # ------------------------------------------------------
-gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git', branch: 'tl/fix-install-generator'
+gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git'
 
 run 'bundle config build.nokogiri —use-system-libraries' # Prevent warning when building Nokogiri
 
