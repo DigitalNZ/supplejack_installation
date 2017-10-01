@@ -242,7 +242,7 @@ code = <<-CODE
     landing_url: 'http://boost.co.nz/')
 
   # Attach fragments
-  record.fragments << SupplejackApi::Fragment.new(
+  record.fragments << SupplejackApi::ApiRecord::RecordFragment.new(
     title: 'Supplejack API',
     description: 'The Supplejack API is a mountable engine which provides functionality to store, index and retrieve metadata via an API.',
     category: ['engine'],
