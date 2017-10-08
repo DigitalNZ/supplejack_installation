@@ -70,6 +70,7 @@ run "bundle exec sidekiq > /dev/null 2>&1 &"
 api_key     = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
 manager_key = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
 worker_key  = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
+harvester_api_key  = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
 
 
 # ------------------------------------------------------ 
@@ -87,6 +88,7 @@ development: &development
   HARVESTER_CACHING_ENABLED: true
   PARSER_TYPE_ENABLED: #{concept_enabled}
   API_HOST: "http://localhost:3000"
+  HARVESTER_API_KEY: "#{harvester_api_key}"
   API_MONGOID_HOSTS: "localhost:27017"
 
 staging:
@@ -122,6 +124,7 @@ end
 worker_settings = <<-SETTINGS
 development:
   API_HOST: "http://localhost:3000"
+  HARVESTER_API_KEY: "#{harvester_api_key}"
   API_MONGOID_HOSTS: "localhost:27017"
   MANAGER_HOST: "http://localhost:3001"
   MANAGER_API_KEY: "#{manager_key}"
@@ -233,6 +236,13 @@ code = <<-CODE
     name: 'Test User',
     authentication_token: '_pY8kpGk_GU2QgMHfYFj',
     role: 'admin')
+
+  # Create harvester user
+  user = SupplejackApi::User.create(
+    email: 'harvester@example.com',
+    name: 'Harvester User',
+    authentication_token: '#{harvester_api_key}',
+    role: 'harvester')
 
   # Create a sample record
   Sunspot.session = Sunspot::Rails.build_session
