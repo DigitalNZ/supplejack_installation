@@ -1,5 +1,5 @@
 # The Supplejack installation scripts are Crown copyright (C) 2014, New Zealand Government,
-# and are licensed under the GNU General Public License, version 3. 
+# and are licensed under the GNU General Public License, version 3.
 # See https://github.com/DigitalNZ/supplejack_installationn for details.
 #
 # Supplejack was created by DigitalNZ at the National Library of NZ
@@ -8,7 +8,7 @@
 
 require 'yaml'
 
-# ------------------------------------------------------ 
+# ------------------------------------------------------
 # Check MongoDB connection
 # ------------------------------------------------------
 mongoid = `ps aux | grep [m]ongo | grep -v grep | awk '{ print $2 }'`
@@ -17,7 +17,7 @@ unless mongoid.present?
   raise 'Unable to connect to MongoDB. Make sure MongoDB is installed and runnung properly.'
 end
 
-# ------------------------------------------------------ 
+# ------------------------------------------------------
 # Install supplejack_api gem
 # ------------------------------------------------------
 gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git', branch: 'oliver/install-bugs'
@@ -29,11 +29,11 @@ puts 'Bundling your api....'
 run 'bundle install --quiet'
 
 puts 'Running supplejack_api generator install script'
-# Run the Supplejack API installer 
+# Run the Supplejack API installer
 run 'bundle exec rails generate supplejack_api:install --force --no-documentation'
 run 'bundle install --quiet'
 
-# ------------------------------------------------------ 
+# ------------------------------------------------------
 # Start Solr
 # ------------------------------------------------------
 
@@ -80,9 +80,8 @@ if sidekiq_pid.present?
 end
 
 run "bundle exec sidekiq > /dev/null 2>&1 &"
-run 'bundle exec rails server -p3000 > /dev/null 2>&1 &'
 
-# ------------------------------------------------------ 
+# ------------------------------------------------------
 # Generate API keys
 # ------------------------------------------------------
 manager_key     = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
@@ -91,7 +90,7 @@ worker_key  = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
 
 
 
-# ------------------------------------------------------ 
+# ------------------------------------------------------
 # Generate API seed record data
 # ------------------------------------------------------
 puts 'Seeding API data'
@@ -130,41 +129,6 @@ code = <<-RUBY
   # Save and index
   record.save!
   record.index!
-
-  puts "\n"
-  puts "\n"
-  puts '------------------------------------------------------------------'
-  puts 'Congratulations! You now have a working Supplejack-powered API'
-  puts "\n"
-  puts '############################################'
-  puts '##  Your API key is ' + user.api_key  ##'
-  puts '############################################'
-  puts "\n"
-  puts 'To retrieve the sample record, go to:'
-  puts 'http://localhost:3000/records/' + record.record_id.to_s + '.json?api_key=' + user.api_key
-  puts "\n"
-  puts 'To perform a search, go to:'
-  puts 'http://localhost:3000/records.json?api_key=' + user.api_key
-  puts "\n"
-  puts "What's Next?"
-  puts "------------"
-  puts '* Visit Supplejack documentation: http://digitalnz.github.io/supplejack'
-  puts '* Edit your schema file: http://digitalnz.github.io/supplejack/api/creating-a-schema.html'
-  puts '* Start creating records by installing the Supplejack Manager and Worker'
-  puts '  - Supplejack Manager: http://digitalnz.github.io/supplejack/start/supplejack-manager.html'
-  puts '  - Supplejack Worker: http://digitalnz.github.io/supplejack/start/supplejack-worker.html'
-  puts '* Clone Supplejack Website demo and start interacting with your API. http://digitalnz.github.io/supplejack/start/supplejack-website.html'
-  puts "\n"
-  puts 'You can view all this information at any time by visiting:'
-  puts 'http://localhost:3000/welcome'
-  puts "\n"
-  puts 'Developer Notes'
-  puts "---------------"
-  puts "To kill all rails servers, run the following: `ps -ef | grep '[p]300\|[s]idekiq' | awk '{ print $2; }' | while read line; do kill $line; done`"
-  puts "\n"
-  puts '------------------------------------------------------------------'
-  puts "\n"
-  puts "\n"
 RUBY
 
 file 'db/seeds.rb', code, force: true
@@ -173,7 +137,7 @@ gsub_file('db/seeds.rb', /^\"|puts\s(.*)\s/, '', verbose: false)
 
 puts 'Seeded API data'
 
-# ------------------------------------------------------ 
+# ------------------------------------------------------
 # Install Supplejack Manager
 # ------------------------------------------------------
 puts 'Installing Supplejack Manager'
@@ -202,7 +166,7 @@ inside('tmp') do
   inside('supplejack_manager') do
     file 'config/application.yml', manager_settings, force: true
   end
-  
+
   run 'mv supplejack_manager ../../'
 
   inside('../../supplejack_manager') do
@@ -211,7 +175,7 @@ inside('tmp') do
     run 'bundle install --quiet'
     run 'bundle exec rake db:seed'
 
-    # ------------------------------------------------------ 
+    # ------------------------------------------------------
     # Run manager server
     # ------------------------------------------------------
     # run 'bundle exec rails server -p3001 > /dev/null 2>&1 &'
@@ -219,7 +183,7 @@ inside('tmp') do
 end
 
 
-# ------------------------------------------------------ 
+# ------------------------------------------------------
 # Install Supplejack Worker
 # ------------------------------------------------------
 puts 'Installing Supplejack Worker'
@@ -242,10 +206,10 @@ inside('tmp') do
   inside('supplejack_worker') do
     file 'config/application.yml', worker_settings, force: true
   end
-  
+
   run 'mv supplejack_worker ../../'
 
-  # ------------------------------------------------------ 
+  # ------------------------------------------------------
   # Run worker server
   # ------------------------------------------------------
   inside('../../supplejack_worker') do
@@ -258,7 +222,7 @@ inside('tmp') do
   end
 end
 
-# ------------------------------------------------------ 
+# ------------------------------------------------------
 # Create Welcome page
 # ------------------------------------------------------
 
@@ -283,30 +247,30 @@ file 'app/views/application/welcome.html.erb', <<-CODE
     %>
     <h2>Congratulations!</h2>
     <h2>You now have a working Supplejack-powered API</h2>
-  
+
     <h4>Your API key is <%= api_key %></h4>
-  
+
     <h3>Accessing Supplejack</h3>
-  
+
     <h5>To retrieve the sample record, go to:</h5>
     <a href="http://localhost:3000/records/<%= SupplejackApi::Record.last.record_id %>.json?api_key=<%= api_key %>">http://localhost:3000/records/<%= SupplejackApi::Record.last.record_id %>.json?api_key=<%= api_key %></a>
-  
+
     <h5>To perform a search, go to:</h5>
     <a href="http://localhost:3000/records.json?api_key=<%= api_key %>">http://localhost:3000/records.json?api_key=<%= api_key %></a>
-  
+
     <h5>To visit the Supplejack Manager</h5>
     <p>In your terminal, change directory to supplejack_manager, and run 'bundle exec rails s -p 3001'</p>
     <p>Then visit: <a href="http://localhost:3001">http://localhost:3001/</a></p>
     <p>The default username/password is test@example.com/password</p>
-  
+
     <h5>The Supplejack Worker</h5>
     <p>In your terminal, change directory to supplejack_worker, and run 'bundle exec rails s -p 3002'</p>
 
     <p>Then visit: <a href="http://localhost:3002/harvest_jobs?auth_token=#{worker_key}.">http://localhost:3002/harvest_jobs?auth_token=#{worker_key}. </a></p>
-  
+
     <p>Note, there is no data in the Worker yet.</p>
-  
-  
+
+
     <h3>What's Next?</h3>
     <ul>
       <li>Visit Supplejack documentation: http://digitalnz.github.io/supplejack</li>
@@ -314,17 +278,46 @@ file 'app/views/application/welcome.html.erb', <<-CODE
       <li>Start creating records by installing the Supplejack <a href="http://digitalnz.github.io/supplejack/start/supplejack-manager.html">Manager</a> and <a href="http://digitalnz.github.io/supplejack/start/supplejack-worker.html">Worker</a></li>
       <li>Clone Supplejack Website demo and start interacting with your API. Visit <a href="http://digitalnz.github.io/supplejack/start/supplejack-website.html">Supplejack Website Demo</a> for more info</li>
     </ul>
-  
+
     <h3>Developer Notes</h3>
-  
+
     <p>To kill all rails servers, run the following:</p>
     <p><code>`ps -ef | grep '[p]300\|[s]idekiq' | awk '{ print $2; }' | while read line; do kill $line; done`</code></p>
   </div>
 </div>
 CODE
 
-# ------------------------------------------------------ 
-# Run API server
 # ------------------------------------------------------
-
-run 'open http://localhost:3000/welcome'
+# Contratulations and start up instructions.
+# ------------------------------------------------------
+puts "\n"
+puts "\n"
+puts '------------------------------------------------------------------'
+puts 'Congratulations! You now have a working Supplejack-powered API'
+puts "\n"
+puts '############################################'
+puts '##  Your API key is ' + manager_key
+puts '############################################'
+puts "\n"
+puts "To start your api application, cd in to your application and run 'bundle exec rails s -p 3000'"
+puts "\n"
+puts 'To perform a search, go to:'
+puts 'http://localhost:3000/records.json?api_key=' + manager_key
+puts "\n"
+puts 'To retrieve the sample record, use the id of one of the records from your search, and go to:'
+puts 'http://localhost:3000/records/<record_id here>.json?api_key=' + manager_key
+puts "\n"
+puts "For example: http://localhost:3000/records/5.json?api_key=" + manager_key
+puts "\n"
+puts "What's Next?"
+puts "------------"
+puts '* Visit Supplejack documentation: http://digitalnz.github.io/supplejack'
+puts '* Edit your schema file: http://digitalnz.github.io/supplejack/api/creating-a-schema.html'
+puts '* Start creating records by installing the Supplejack Manager and Worker'
+puts '  - Supplejack Manager: http://digitalnz.github.io/supplejack/start/supplejack-manager.html'
+puts '  - Supplejack Worker: http://digitalnz.github.io/supplejack/start/supplejack-worker.html'
+puts '* Clone Supplejack Website demo and start interacting with your API. http://digitalnz.github.io/supplejack/start/supplejack-website.html'
+puts "\n"
+puts 'You can view all this information at any time by visiting:'
+puts 'http://localhost:3000/welcome'
+puts "\n"
