@@ -20,7 +20,8 @@ end
 # ------------------------------------------------------
 # Install supplejack_api gem
 # ------------------------------------------------------
-gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git', branch: 'oliver/install-bugs'
+# gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git', branch: 'oliver/install-bugs'
+gem 'supplejack_api', path: '/Users/oliverstigley/workspace/supplejack/supplejack_api/'
 gem 'jquery-rails'
 
 run 'bundle config build.nokogiri —use-system-libraries' # Prevent warning when building Nokogiri
@@ -63,7 +64,7 @@ end
 
 rake 'sunspot:solr:start'
 
-puts 'Sleeping for 15 seconds because sunspot is can be slow to wake up in the morning...'
+puts '\nSleeping for 15 seconds because sunspot is can be slow to wake up in the morning... \n'
 sleep 15
 
 # ------------------------------------------------------
@@ -114,17 +115,17 @@ code = <<-RUBY
   Sunspot.session = Sunspot::Rails.build_session
   record = SupplejackApi::Record.new(
     internal_identifier: 'abc123',
-    status: 'active',
-    landing_url: 'http://boost.co.nz/')
+    status: 'active')
 
   # Attach fragments
   record.fragments << SupplejackApi::ApiRecord::RecordFragment.new(
     title: 'Supplejack API',
     description: 'The Supplejack API is a mountable engine which provides functionality to store, index and retrieve metadata via an API.',
     category: ['engine'],
-    display_content_partner: 'DigitalNZ',
+    display_content_partner: ['DigitalNZ'],
     display_collection: 'natlib.govt.nz',
-    source_url: 'http://natlib.govt.nz')
+    source_url: 'http://natlib.govt.nz',
+    landing_url: 'http://boost.co.nz/')
 
   # Save and index
   record.save!
