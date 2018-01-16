@@ -197,7 +197,7 @@ development:
   AIRBRAKE_API_KEY: "abc123"
   LINK_CHECKING_ENABLED: "true"
   LINKCHECKER_RECIPIENTS: "test@example.com"
-  HARVESTER_API_KEY: "#{manager_key}"
+  HARVESTER_API_KEY: "#{harvester_key}"
   WORKER_KEY: "#{worker_key}"
 SETTINGS
 
@@ -260,7 +260,8 @@ file 'app/views/application/welcome.html.erb', <<-CODE
     <a href="http://localhost:3000/records.json?api_key=<%= api_key %>">http://localhost:3000/records.json?api_key=<%= api_key %></a>
 
     <h5>To visit the Supplejack Manager</h5>
-    <p>In your terminal, change directory to supplejack_manager, and run 'bundle exec rails s -p 3001'</p>
+    <p>In your terminal, change directory to supplejack_manager, and run 'bundle exec rails s -p 3001'.  Then,
+     in a new terminal, go to your supplejack_worker terminal, and run 'bundle exec rails s -p 3002'</p>
     <p>Then visit: <a href="http://localhost:3001">http://localhost:3001/</a></p>
     <p>The default username/password is test@example.com/password</p>
 
