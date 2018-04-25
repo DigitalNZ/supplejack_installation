@@ -13,7 +13,7 @@ To install the Supplejack Stack run:
 rails _5.1.4_ new mysupplejack_api_name --skip-bundle -m https://raw.github.com/digitalnz/supplejack_installation/master/supplejack_api_template.rb
 ```
 
-**Note**: Supplejack Api requires Rails 4.1
+**Note**: Supplejack Api requires Rails 5.1.4
 
 ## COPYRIGHT AND LICENSING  
 

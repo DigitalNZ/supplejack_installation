@@ -32,6 +32,7 @@ puts 'Running supplejack_api generator install script'
 # Run the Supplejack API installer
 run 'bundle exec rails generate supplejack_api:install --force --no-documentation'
 run 'bundle install --quiet'
+run 'bundle update --quiet'
 
 # ------------------------------------------------------
 # Start Solr
