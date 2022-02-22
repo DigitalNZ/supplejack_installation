@@ -21,9 +21,7 @@ end
 # Install supplejack_api gem
 # ------------------------------------------------------
 
-tag = `git ls-remote --tags https://github.com/DigitalNZ/supplejack_api | grep -o 'v.*' | sort -r | head -1`
-
-gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git', tag: tag
+gem 'supplejack_api', git: 'https://github.com/DigitalNZ/supplejack_api.git'
 gem 'jquery-rails'
 
 run 'bundle config build.nokogiri —use-system-libraries' # Prevent warning when building Nokogiri
