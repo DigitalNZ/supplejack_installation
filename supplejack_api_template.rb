@@ -8,6 +8,7 @@
 
 require 'yaml'
 
+
 # ------------------------------------------------------
 # Check MongoDB connection
 # ------------------------------------------------------
@@ -97,8 +98,6 @@ manager_key     = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
 harvester_key = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
 worker_key  = SecureRandom.urlsafe_base64(15).tr('lIO0', 'sxyz')
 
-
-
 # ------------------------------------------------------
 # Generate API seed record data
 # ------------------------------------------------------
@@ -111,6 +110,7 @@ code = <<-RUBY
     password: 'password',
     role: 'admin',
     authentication_token: "#{manager_key}")
+
   # Create harvester
   harvester = SupplejackApi::User.create(
     email: 'harvester_key@example.com',
@@ -137,7 +137,10 @@ code = <<-RUBY
 
   # Save and index
   record.save!
+
   record.index!
+
+  Sunspot.commit
 RUBY
 
 file 'db/seeds.rb', code, force: true
@@ -150,18 +153,13 @@ puts 'Seeded API data'
 # Install Supplejack Manager
 # ------------------------------------------------------
 puts 'Installing Supplejack Manager'
-if yes?("Do you want to enable concept harvest?")
-  concept_enabled = true
-else
-  concept_enabled = false
-end
+
 manager_settings = <<-SETTINGS
 development: &development
   WORKER_HOST: "http://localhost:3002"
   WORKER_KEY: "#{worker_key}"
   HARVESTER_API_KEY: "#{harvester_key}"
   HARVESTER_CACHING_ENABLED: true
-  PARSER_TYPE_ENABLED: #{concept_enabled}
   API_HOST: "http://localhost:3000"
   API_MONGOID_HOSTS: "localhost:27017"
 
@@ -179,7 +177,7 @@ inside('tmp') do
   run 'mv supplejack_manager ../../'
 
   inside('../../supplejack_manager') do
-    code = "User.new(email: 'test@example.com', name: 'Test User', password: 'password', role: 'admin').update_attribute(:authentication_token, '#{manager_key}')"
+    code = "User.new(email: 'test@example.com', name: 'Test User', password: 'password', role: 'admin')"
     file 'db/seeds.rb', code, force: true
     run 'bundle install --quiet'
     run 'bundle exec rake db:seed'
@@ -201,8 +199,6 @@ development:
   API_HOST: "http://localhost:3000"
   API_MONGOID_HOSTS: "localhost:27017"
   MANAGER_HOST: "http://localhost:3001"
-  HARVESTER_CACHING_ENABLED: true
-  AIRBRAKE_API_KEY: "abc123"
   LINK_CHECKING_ENABLED: "true"
   LINKCHECKER_RECIPIENTS: "test@example.com"
   HARVESTER_API_KEY: "#{harvester_key}"
