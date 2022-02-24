@@ -10,10 +10,10 @@ For more information on how to configure and use this application refer to the [
 To install the Supplejack Stack run:
 
 ```bash
-rails _5.1.4_ new mysupplejack_api_name --skip-bundle -m https://raw.github.com/digitalnz/supplejack_installation/master/supplejack_api_template.rb
+rails _6.1.4.6_ new mysupplejack_api_name --api --skip-bundle -m https://raw.github.com/digitalnz/supplejack_installation/master/supplejack_api_template.rb
 ```
 
-**Note**: Supplejack Api requires Rails 4.1
+**Note**: Supplejack Api requires Rails 6.1
 
 ## COPYRIGHT AND LICENSING  
 
